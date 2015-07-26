@@ -28,7 +28,7 @@ namespace Band.BackgroundSample
     /// </summary>
     public class MainPageViewModel : ViewModelBase
     {
-        private bool _isBandRegistered;
+        private bool isBandRegistered;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainPageViewModel"/> class.
@@ -50,11 +50,11 @@ namespace Band.BackgroundSample
         {
             get
             {
-                return this._isBandRegistered;
+                return this.isBandRegistered;
             }
             set
             {
-                this.Set(() => this.IsBandRegistered, ref this._isBandRegistered, value);
+                this.Set(() => this.IsBandRegistered, ref this.isBandRegistered, value);
             }
         }
 
@@ -64,56 +64,64 @@ namespace Band.BackgroundSample
 
             var bandInfo = (await BandClientManager.Instance.GetBandsAsync()).FirstOrDefault();
 
-            var consentGranted = await GetHeartRateConsent(bandInfo);
+            var consentGranted = await GetConsentForHeartRate(bandInfo);
 
             if (consentGranted.HasValue && consentGranted.Value)
             {
-                // RfCommServiceId has come from the Guid in the Package.appxmanifest. There must be a better way of doing this.
-                var device = (await DeviceInformation.FindAllAsync(RfcommDeviceService.GetDeviceSelector(RfcommServiceId.FromUuid(new Guid("A502CA9A-2BA5-413C-A4E0-13804E47B38F"))))).FirstOrDefault(x => x.Name == bandInfo.Name);
+                // The Guid used for the RfcommServiceId is from the Package.appxmanifest. 
+                var device =
+                    (await
+                     DeviceInformation.FindAllAsync(
+                         RfcommDeviceService.GetDeviceSelector(
+                             RfcommServiceId.FromUuid(new Guid("A502CA9A-2BA5-413C-A4E0-13804E47B38F")))))
+                        .FirstOrDefault(x => x.Name == bandInfo.Name);
 
                 backgroundRegistered = device != null
                                        && await
-                                          BackgroundTaskProvider.RegisterBandHealthTask(
-                                              typeof(BandHealthTask).FullName,
+                                          BackgroundTaskProvider.RegisterBandDataTask(
+                                              typeof(BandDataTask).FullName,
                                               device.Id);
             }
 
             if (backgroundRegistered)
             {
-                var successDialog =
+                var success =
                     new MessageDialog(
-                        "Microsoft Band background tasks have been registered and the app can now be closed.",
-                        "Background Tasks Registered Successfully.");
+                        "The BandDataTask has been registered successfully and the app can be closed.",
+                        "Background task registered");
 
-                successDialog.Commands.Add(new UICommand("Ok", command => { this.IsBandRegistered = true; }));
+                success.Commands.Add(new UICommand("Ok", command => { this.IsBandRegistered = true; }));
 
-                await successDialog.ShowAsync();
+                await success.ShowAsync();
             }
             else
             {
-                MessageDialog failDialog;
+                MessageDialog error;
 
                 if (consentGranted.HasValue && !consentGranted.Value)
                 {
-                    failDialog = new MessageDialog("Microsoft Band background tasks have not been registered as you have rejected consent to access the heart rate sensor. If this action was done in error, please try again.", "Background Tasks Not Registered.");
+                    error =
+                        new MessageDialog(
+                            "The BandDataTask was not registered as you have rejected consent to access the heart rate sensor. Please try again.",
+                            "Background task not registered");
                 }
                 else
                 {
-                    failDialog =
+                    error =
                         new MessageDialog(
-                            "Microsoft Band background tasks have not registered correctly. Check your Microsoft Band is connected and try again.",
-                            "Background Tasks Failed To Register.");
+                            "The BandDataTask was not registered successfully. Check your Microsoft Band is connected and try again.",
+                            "Background task not registered");
                 }
 
-                failDialog.Commands.Add(new UICommand("Ok", command => { }));
+                error.Commands.Add(new UICommand("Ok", command => { }));
 
-                await failDialog.ShowAsync();
+                await error.ShowAsync();
             }
         }
 
-        private static async Task<bool?> GetHeartRateConsent(IBandInfo bandInfo)
+        private static async Task<bool?> GetConsentForHeartRate(IBandInfo bandInfo)
         {
-            bool granted = false;
+            bool consentGranted;
 
             IBandClient bandClient = null;
 
@@ -136,11 +144,11 @@ namespace Band.BackgroundSample
                     {
                         if (bandClient.SensorManager.HeartRate.GetCurrentUserConsent() != UserConsent.Granted)
                         {
-                            granted = await bandClient.SensorManager.HeartRate.RequestUserConsentAsync();
+                            consentGranted = await bandClient.SensorManager.HeartRate.RequestUserConsentAsync();
                         }
                         else
                         {
-                            granted = true;
+                            consentGranted = true;
                         }
                     }
                     else
@@ -155,9 +163,8 @@ namespace Band.BackgroundSample
             }
 
             bandClient.Dispose();
-            bandClient = null;
 
-            return granted;
+            return consentGranted;
         }
     }
 }

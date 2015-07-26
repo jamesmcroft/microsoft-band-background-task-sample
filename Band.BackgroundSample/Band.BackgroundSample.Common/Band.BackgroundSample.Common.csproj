@@ -40,7 +40,7 @@
   <ItemGroup>
     <Compile Include="BackgroundTaskProvider.cs" />
     <Compile Include="DisposableAction.cs" />
-    <Compile Include="Models\BandHealth.cs" />
+    <Compile Include="Models\BandData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

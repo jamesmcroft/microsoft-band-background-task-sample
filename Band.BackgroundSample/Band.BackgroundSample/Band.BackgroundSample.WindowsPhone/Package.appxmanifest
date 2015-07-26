@@ -22,7 +22,7 @@
         <m3:SplashScreen Image="Assets\SplashScreen.png" />
       </m3:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Band.BackgroundTask.BandHealthTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="Band.BackgroundTask.BandDataTask">
           <BackgroundTasks>
             <m2:Task Type="deviceUse" />
           </BackgroundTasks>

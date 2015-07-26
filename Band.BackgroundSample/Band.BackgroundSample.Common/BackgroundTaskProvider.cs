@@ -2,9 +2,6 @@
 // <copyright file="BackgroundTaskProvider.cs" company="James Croft">
 //   Copyright (c) James Croft 2015.
 // </copyright>
-// <summary>
-//   Defines the BackgroundTaskProvider type.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Band.BackgroundSample.Common
@@ -20,7 +17,7 @@ namespace Band.BackgroundSample.Common
     /// </summary>
     public static class BackgroundTaskProvider
     {
-        private const string BandHealthTaskId = "BandHealthTask";
+        private const string BandDataTaskId = "BandDataTask";
 
         /// <summary>
         /// Gets the device use trigger.
@@ -28,79 +25,80 @@ namespace Band.BackgroundSample.Common
         public static DeviceUseTrigger DeviceUseTrigger { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether the Band health task is registered.
+        /// Gets a value that indicates whether the BandDataTask is registered.
         /// </summary>
-        public static bool IsBandHealthTaskRegistered
+        public static bool IsBandDataTaskRegistered
         {
             get
             {
-                return BandHealthTask != null;
+                return BandDataTask != null;
             }
         }
 
         /// <summary>
-        /// Gets the Band health task.
+        /// Gets the BandDataTask from the BackgroundTaskRegistration provider.
         /// </summary>
-        public static IBackgroundTaskRegistration BandHealthTask
+        public static IBackgroundTaskRegistration BandDataTask
         {
             get
             {
-                var task = BackgroundTaskRegistration.AllTasks.FirstOrDefault(t => t.Value.Name == BandHealthTaskId).Value;
+                var task = BackgroundTaskRegistration.AllTasks.FirstOrDefault(t => t.Value.Name == BandDataTaskId).Value;
                 return task;
             }
         }
 
         /// <summary>
-        /// Registers the Band health task.
+        /// Registers the BandDataTask with the BackgroundTaskRegistration provider.
         /// </summary>
         /// <param name="taskName">
-        /// The task name.
+        /// The name of the task to register. (E.g. typeof(Task).FullName)
         /// </param>
         /// <param name="deviceId">
-        /// The device id.
+        /// The device id to register with the DeviceUseTrigger.
         /// </param>
         /// <returns>
-        /// The <see cref="Task"/>.
+        /// Returns a bool whether the task has registered.
         /// </returns>
-        public static async Task<bool> RegisterBandHealthTask(string taskName, string deviceId)
+        public static async Task<bool> RegisterBandDataTask(string taskName, string deviceId)
         {
             try
             {
-                if (IsBandHealthTaskRegistered)
+                if (IsBandDataTaskRegistered)
                 {
-                    UnregisterBandHealthTask();
+                    UnregisterBandDataTask();
                 }
 
                 var access = await BackgroundExecutionManager.RequestAccessAsync();
 
-                if ((access == BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity) || (access == BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity))
+                if ((access == BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity)
+                    || (access == BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity))
                 {
-                    await StartBandHealthTask(taskName, deviceId);
+                    await BuildBandDataTask(taskName, deviceId);
                     return true;
                 }
             }
             catch (Exception)
             {
-                UnregisterBandHealthTask();
+                UnregisterBandDataTask();
             }
 
             return false;
         }
 
         /// <summary>
-        /// Unregisters the Band health task.
+        /// Unregisters the BandDataTask from the BackgroundTaskRegistration provider.
         /// </summary>
-        public static void UnregisterBandHealthTask()
+        public static void UnregisterBandDataTask()
         {
-            if (IsBandHealthTaskRegistered)
+            if (IsBandDataTaskRegistered)
             {
-                BandHealthTask.Unregister(false);
+                BandDataTask.Unregister(false);
             }
         }
 
-        private static async Task StartBandHealthTask(string taskName, string deviceId)
+        private static async Task BuildBandDataTask(string taskName, string deviceId)
         {
-            var taskBuilder = new BackgroundTaskBuilder { Name = BandHealthTaskId, TaskEntryPoint = taskName };
+            var taskBuilder = new BackgroundTaskBuilder { Name = BandDataTaskId, TaskEntryPoint = taskName };
 
             DeviceUseTrigger = new DeviceUseTrigger();
 

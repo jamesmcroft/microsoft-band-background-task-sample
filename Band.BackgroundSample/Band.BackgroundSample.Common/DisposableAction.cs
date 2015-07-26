@@ -13,7 +13,7 @@ namespace Band.BackgroundSample.Common
     /// </summary>
     public class DisposableAction : IDisposable
     {
-        private Action _dispose;
+        private Action dispose;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DisposableAction"/> class.
@@ -22,13 +22,13 @@ namespace Band.BackgroundSample.Common
         /// The dispose.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="dispose"/> is <see langword="null"/>.
+        /// Thrown if the dispose action is null.
         /// </exception>
         public DisposableAction(Action dispose)
         {
             if (dispose == null) throw new ArgumentNullException("dispose");
 
-            this._dispose = dispose;
+            this.dispose = dispose;
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Band.BackgroundSample.Common
 
             construct();
 
-            this._dispose = dispose;
+            this.dispose = dispose;
         }
 
         /// <summary>    
@@ -76,14 +76,14 @@ namespace Band.BackgroundSample.Common
         {
             if (disposing)
             {
-                if (this._dispose == null)
+                if (this.dispose == null)
                 {
                     return;
                 }
 
-                this._dispose();
+                this.dispose();
 
-                this._dispose = null;
+                this.dispose = null;
             }
         }
     }

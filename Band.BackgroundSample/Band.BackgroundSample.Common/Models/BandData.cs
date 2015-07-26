@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BandHealth.cs" company="James Croft">
+// <copyright file="BandData.cs" company="James Croft">
 //   Copyright (c) James Croft 2015.
 // </copyright>
 // <summary>
-//   Defines the BandHealth type.
+//   Defines the BandData type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -14,9 +14,9 @@ namespace Band.BackgroundSample.Common.Models
     using Microsoft.Band.Sensors;
 
     /// <summary>
-    /// The Band health model.
+    /// The Band data model.
     /// </summary>
-    public class BandHealth
+    public class BandData
     {
         /// <summary>
         /// Gets or sets the pace.
@@ -54,33 +54,14 @@ namespace Band.BackgroundSample.Common.Models
         public DateTime CapturedAt { get; set; }
 
         /// <summary>
-        /// Determines whether the specified object is equal to the current object.
-        /// </summary>
-        /// <returns>
-        /// true if the specified object  is equal to the current object; otherwise, false.
-        /// </returns>
-        /// <param name="obj">The object to compare with the current object. </param><filterpriority>2</filterpriority>
-        public override bool Equals(object obj)
-        {
-            var health = obj as BandHealth;
-            if (health == null)
-            {
-                return false;
-            }
-
-            return this.HeartRate == health.HeartRate && this.SkinTemperature == health.SkinTemperature
-                   && this.MotionType == health.MotionType && this.Pace == health.Pace && this.Speed == health.Speed;
-        }
-
-        /// <summary>
         /// Creates a clone of the object.
         /// </summary>
         /// <returns>
-        /// The <see cref="BandHealth"/>.
+        /// The <see cref="BandData"/>.
         /// </returns>
-        public BandHealth Clone()
+        public BandData Clone()
         {
-            var bandHealth = new BandHealth
+            var bandHealth = new BandData
             {
                 CapturedAt = this.CapturedAt,
                 MotionType = this.MotionType,
@@ -91,18 +72,6 @@ namespace Band.BackgroundSample.Common.Models
             };
 
             return bandHealth;
-        }
-
-        /// <summary>
-        /// Serves as the default hash function. 
-        /// </summary>
-        /// <returns>
-        /// A hash code for the current object.
-        /// </returns>
-        /// <filterpriority>2</filterpriority>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }
