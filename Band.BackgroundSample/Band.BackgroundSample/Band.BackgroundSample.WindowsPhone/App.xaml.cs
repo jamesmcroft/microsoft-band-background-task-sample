@@ -18,7 +18,7 @@ namespace Band.BackgroundSample
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public sealed partial class App : Application
+    public sealed partial class App
     {
         private TransitionCollection transitions;
 

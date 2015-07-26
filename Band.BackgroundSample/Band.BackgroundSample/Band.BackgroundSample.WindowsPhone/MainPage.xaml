@@ -2,9 +2,11 @@
     x:Class="Band.BackgroundSample.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    RequestedTheme="Light"
+    DataContext="{Binding MainPageViewModel, Source={StaticResource MainAppLocator}}">
 
     <Grid>
-
+        <Button Content="Register Band Task" Command="{Binding RegisterBandCommand}" Visibility="{Binding IsBandRegistered, Converter={StaticResource BooleanToVisibilityConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" />
     </Grid>
 </Page>
