@@ -5,11 +5,11 @@
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F92A9093-E167-427D-8E49-C1BF6E33BB1B}</ProjectGuid>
-    <OutputType>winmdobj</OutputType>
+    <ProjectGuid>{9D24120A-375A-45FB-A8DE-3518E7D1342B}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Band.BackgroundTask</RootNamespace>
-    <AssemblyName>Band.BackgroundTask</AssemblyName>
+    <RootNamespace>Band.BackgroundSample.Common</RootNamespace>
+    <AssemblyName>Band.BackgroundSample.Common</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -38,7 +38,9 @@
     <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BandHealthTask.cs" />
+    <Compile Include="BackgroundTaskProvider.cs" />
+    <Compile Include="DisposableAction.cs" />
+    <Compile Include="Models\BandHealth.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -46,26 +48,13 @@
       <HintPath>..\packages\Microsoft.Band.1.3.10702\lib\portable-win81+wpa81\Microsoft.Band.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Band.Phone">
-      <HintPath>..\packages\Microsoft.Band.1.3.10702\lib\wpa81\Microsoft.Band.Phone.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Band.Store, Version=1.3.10702.1, Culture=neutral, PublicKeyToken=608d7da3159f502b, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Band.1.3.10702\lib\portable-win81+wpa81\Microsoft.Band.Store.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Band.BackgroundSample.Common\Band.BackgroundSample.Common.csproj">
-      <Project>{9d24120a-375a-45fb-a8de-3518e7d1342b}</Project>
-      <Name>Band.BackgroundSample.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
