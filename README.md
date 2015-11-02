@@ -1,4 +1,7 @@
 # Microsoft Band Background Task Sample
+
+If you're having issues with the sample, there are some known issues with this sample and [solutions to fix them on the Wiki](https://github.com/jamesmcroft/MicrosoftBand-BackgroundSample/wiki/1-Known-Issues).
+
 This code sample is part of my [Developing for Microsoft Band with WinRT] (http://jamescroft.co.uk/category/blog/iot/) blog post series focussing on developing a mobile application for Windows with the Microsoft Band.
 
 This sample looks at creating and registering a background task with a Windows Phone 8.1 application that utilises the Band's sensors to gather data periodically for an [indefinite](https://www.bing.com/search?q=define+indefinite&FORM=EDGENN) amount of time. This, for example, allows developers to create innovative running app solutions which can run under the lock screen while still accessing the features of the Microsoft Band.
