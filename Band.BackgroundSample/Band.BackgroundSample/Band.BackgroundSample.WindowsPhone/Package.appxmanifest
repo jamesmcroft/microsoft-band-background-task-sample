@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
+<Package xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns="http://schemas.microsoft.com/appx/2010/manifest">
   <Identity Name="7fabc699-2e57-4868-bf9d-f303c8a4e256" Publisher="CN=James" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="7fabc699-2e57-4868-bf9d-f303c8a4e256" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
@@ -34,13 +34,13 @@
     <Capability Name="internetClientServer" />
     <DeviceCapability Name="proximity" />
     <DeviceCapability Name="location" />
-    <DeviceCapability Name="bluetooth.rfcomm" xmlns="http://schemas.microsoft.com/appx/2013/manifest">
+    
+  <DeviceCapability Name="bluetooth.rfcomm" xmlns="http://schemas.microsoft.com/appx/2013/manifest">
       <Device Id="any">
         <!-- Used by the Microsoft Band SDK -->
         <Function Type="serviceId:A502CA9A-2BA5-413C-A4E0-13804E47B38F" />
         <!-- Used by the Microsoft Band SDK -->
         <Function Type="serviceId:C742E1A2-6320-5ABC-9643-D206C677E580" />
       </Device>
-    </DeviceCapability>
-  </Capabilities>
+    </DeviceCapability></Capabilities>
 </Package>
